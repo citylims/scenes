@@ -1,23 +1,22 @@
 jQuery(document).ready(function($) {
 
-  var color0 = "#151718"
-  var main_color = color0;
+  var main_color = "#151718";
   var canvas_height = window.innerHeight;
   var canvas_width = window.innerWidth;
   var scene = new THREE.Scene();
 
   //cam
-  var camera = new THREE.PerspectiveCamera( 75, canvas_width/canvas_height, 0.1, 1000 );
-  camera.position.set(0,50,200);
+  var camera = new THREE.PerspectiveCamera(75, canvas_width/canvas_height, 0.1, 1000);
+  camera.position.set(0,50,1200);
   camera.lookAt(new THREE.Vector3(0,50,0));
 
   //renderer
-  var renderer = new THREE.WebGLRenderer({ alpha: true }); /// { alpha: true }
-  renderer.setSize( canvas_width, canvas_height );
+  var renderer = new THREE.WebGLRenderer({alpha: true});
+  renderer.setSize(canvas_width, canvas_height);
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.setClearColor(main_color,1);
-  document.body.appendChild( renderer.domElement );
+  document.body.appendChild(renderer.domElement);
 
   //window
   window.onresize = function(){
@@ -25,29 +24,21 @@ jQuery(document).ready(function($) {
     canvas_width = window.innerWidth;
     camera.aspect = canvas_width / canvas_height;
     camera.updateProjectionMatrix();
-    renderer.setSize( canvas_width, canvas_height );
+    renderer.setSize(canvas_width, canvas_height);
   }
 
   //controls
   controls = new THREE.OrbitControls(camera);
   controls.damping = 0.2;
-  controls.maxPolarAngle = Math.PI/2;
-  controls.minPolarAngle = 1;
-  controls.minDistance = 100;
-  controls.maxDistance = 220;
+  // controls.maxPolarAngle = Math.PI/2;
+  // controls.minPolarAngle = 1;
+  controls.maxDistance = 650;
   $('canvas').on( "mouseenter", function(e) {
   controls.enabled = true;
   });
   $('canvas').on( "mouseleave", function(e) {
   controls.enabled = false;
   });
-
-  //lighting
-  var spotLight = new THREE.SpotLight(0xffffff);
-  spotLight.position.set( 0, 100, 100 );
-  spotLight.intensity = 1;
-  spotLight.castShadow = true;
-  scene.add(spotLight);
 
   //particles
   THREE.ImageUtils.crossOrigin = true;
@@ -93,9 +84,9 @@ jQuery(document).ready(function($) {
   function ParticleSystem(number) {
     this.particles = new THREE.Geometry();
     for(var i=0; i < number; i++){
-      var x = (Math.random() - 0.5 ) * 1100;
-      var y = (Math.random() - 0.5 ) * 2300;
-      var z = (Math.random() - 0.5 ) * 1100;
+      var x = (Math.random() - 0.5 ) * 2000;
+      var y = (Math.random() - 0.5 ) * 1100;
+      var z = (Math.random() - 0.5 ) * 2000;
       this.particles.vertices.push(new THREE.Vector3(x,y,z));
     }
   };
@@ -119,10 +110,8 @@ jQuery(document).ready(function($) {
   function createUniverse(universe) {
     console.log(universe);
     var galaxies = universe.galaxies;
-    console.log(galaxies);
     for (var i = 0; i < galaxies.length; i++) {
       var galaxy = new THREE.Points(galaxies[i].system,galaxies[i].material);
-      console.log(galaxy);
       scene.add(galaxy);
     }
   };
@@ -133,7 +122,7 @@ jQuery(document).ready(function($) {
 
   //RENDER
   var render = function () {
-    requestAnimationFrame( render );
+    requestAnimationFrame(render);
     animation();
     renderer.render(scene, camera);
   };
