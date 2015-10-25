@@ -94,7 +94,7 @@ jQuery(document).ready(function($) {
     }
   };
 
-  function ParticleVerse(pArr) {
+  function ParticleGalaxy(pArr) {
     this.systems = [];
     for (var i = 0; i < pArr.length; i++) {
       var customParticle = new ParticleMaterial(pArr[i].color, pArr[i].size, pArr[i].opacity);
@@ -109,8 +109,8 @@ jQuery(document).ready(function($) {
     }
   }
 
-  var universe = new ParticleVerse(particles);
-  console.log(universe);
+  var galaxy = new ParticleGalaxy(particles);
+  console.log(galaxy);
 
 
   //RENDER
