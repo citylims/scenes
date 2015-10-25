@@ -93,9 +93,9 @@ jQuery(document).ready(function($) {
   function ParticleSystem(number) {
     this.particles = new THREE.Geometry();
     for(var i=0; i < number; i++){
-      var x = (Math.random() - 0.5 ) * 800;
-      var y = (Math.random() - 0.5 ) * 800;
-      var z = (Math.random() - 0.5 ) * 800;
+      var x = (Math.random() - 0.5 ) * 1100;
+      var y = (Math.random() - 0.5 ) * 2300;
+      var z = (Math.random() - 0.5 ) * 1100;
       this.particles.vertices.push(new THREE.Vector3(x,y,z));
     }
   };
@@ -127,7 +127,7 @@ jQuery(document).ready(function($) {
     }
   };
 
-  var particles = new Particles(20);
+  var particles = new Particles(30);
   var universe = new ParticleUniverse(particles);
   createUniverse(universe);
 
