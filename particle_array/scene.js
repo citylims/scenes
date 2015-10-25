@@ -66,7 +66,7 @@ jQuery(document).ready(function($) {
     for (var i = 0; i < num; i ++) {
       var c = getRandomColor();
       var o = Math.floor(Math.random() * (100 - 0 + 1)) / 100;
-      var s = Math.floor(Math.random() * ( 6 - 2 + 1)) + 2;
+      var s = Math.floor(Math.random() * ( 10 - 5 + 1)) + 5;
       var particleCount = Math.floor(Math.random() * (1000 - 250 + 1)) + 250;
       var particle = {
         color: c,
