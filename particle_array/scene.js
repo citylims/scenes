@@ -71,7 +71,7 @@ jQuery(document).ready(function($) {
       number: 500
     },
   ]
-  console.log(particles)
+
   function ParticleMaterial(c, s, o) {
     this.material = new THREE.PointsMaterial({
       color: c,
@@ -94,8 +94,8 @@ jQuery(document).ready(function($) {
     }
   };
 
-  function ParticleGalaxy(pArr) {
-    this.systems = [];
+  function ParticleUniverse(pArr) {
+    this.galaxies = [];
     for (var i = 0; i < pArr.length; i++) {
       var customParticle = new ParticleMaterial(pArr[i].color, pArr[i].size, pArr[i].opacity);
       var pMaterial = customParticle.material;
@@ -105,13 +105,24 @@ jQuery(document).ready(function($) {
         material: pMaterial,
         system: pSystem
       };
-      this.systems.push(pObject);
+      this.galaxies.push(pObject);
     }
   }
 
-  var galaxy = new ParticleGalaxy(particles);
-  console.log(galaxy);
+  var universe = new ParticleUniverse(particles);
 
+  function createUniverse(universe) {
+    console.log(universe);
+    var galaxies = universe.galaxies;
+    console.log(galaxies);
+    for (var i = 0; i < galaxies.length; i++) {
+      var galaxy = new THREE.Points(galaxies[i].system,galaxies[i].material);
+      console.log(galaxy);
+      scene.add(galaxy);
+    }
+  };
+
+  createUniverse(universe);
 
   //RENDER
   var render = function () {
