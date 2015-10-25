@@ -50,10 +50,8 @@ jQuery(document).ready(function($) {
   scene.add(spotLight);
 
   //particles
-  var particles = new THREE.Geometry();
+
   THREE.ImageUtils.crossOrigin = true;
-  //particle material constructor;
-  var particleColor = "#F1DD3F";
   function ParticleMaterial(c) {
     this.material = new THREE.PointsMaterial({
       color: c,
@@ -65,16 +63,25 @@ jQuery(document).ready(function($) {
       )
     });
   }
+
+  function ParticleSystem() {
+    this.particles = new THREE.Geometry();
+    for(var i=0; i<2000; i++){
+      var x = (Math.random() - 0.5 ) * 400;
+      var y = (Math.random() - 0.5 ) * 400;
+      var z = (Math.random() - 0.5 ) * 400;
+      this.particles.vertices.push(new THREE.Vector3(x,y,z));
+    }
+  };
+
+  var particleColor = "#F1DD3F";
   var customParticle = new ParticleMaterial(particleColor);
   var pMaterial = customParticle.material
-  for(var i=0; i<2000; i++){
-    var x = (Math.random() - 0.5 ) * 400;
-    var y = (Math.random() - 0.5 ) * 400;
-    var z = (Math.random() - 0.5 ) * 400;
-    particles.vertices.push(new THREE.Vector3(x,y,z));
-  }
+  var customSystem = new ParticleSystem();
+  var pSystem = customSystem.particles;
+  console.log(customSystem.particles);
   // instanciate
-  var particleSystem = new THREE.Points(particles, pMaterial);
+  var particleSystem = new THREE.Points(pSystem, pMaterial);
   scene.add(particleSystem);
 
   //RENDER
