@@ -51,21 +51,42 @@ jQuery(document).ready(function($) {
 
   //particles
   THREE.ImageUtils.crossOrigin = true;
-  function ParticleMaterial(c) {
+  var particles = [
+    {
+      color: "#F1DD3F",
+      opacity: .75,
+      size: 3,
+      number: 500
+    },
+    {
+      color: "#F92672",
+      opacity: .55,
+      size: 4,
+      number: 1000
+    },
+    {
+      color: "#2AA48E",
+      opacity: .8,
+      size: 2,
+      number: 500
+    },
+  ]
+  console.log(particles)
+  function ParticleMaterial(c, s, o) {
     this.material = new THREE.PointsMaterial({
       color: c,
-      size: 3,
+      size: s,
       transparent:true,
-      opacity:.75,
+      opacity: o,
       map: THREE.ImageUtils.loadTexture(
         "https://s3-us-west-2.amazonaws.com/s.cdpn.io/61062/gradient.png"
       )
     });
   }
 
-  function ParticleSystem() {
+  function ParticleSystem(number) {
     this.particles = new THREE.Geometry();
-    for(var i=0; i<2000; i++){
+    for(var i=0; i < number; i++){
       var x = (Math.random() - 0.5 ) * 400;
       var y = (Math.random() - 0.5 ) * 400;
       var z = (Math.random() - 0.5 ) * 400;
@@ -73,33 +94,24 @@ jQuery(document).ready(function($) {
     }
   };
 
-  var colorArry = ["#F1DD3F", "#F92672", "#2AA48E"];
-
-  function particleUniverse(arr) {
-    console.log(arr);
-    for (var i = 0; i < arr.length; i++) {
-      console.log(arr[i]);
-      var customParticle = new ParticleMaterial(arr[i]);
+  function ParticleVerse(pArr) {
+    this.systems = [];
+    for (var i = 0; i < pArr.length; i++) {
+      var customParticle = new ParticleMaterial(pArr[i].color, pArr[i].size, pArr[i].opacity);
       var pMaterial = customParticle.material;
-      var customSystem = new ParticleSystem();
+      var customSystem = new ParticleSystem(pArr[i].number);
       var pSystem = customSystem.particles;
-      var particleSystem = new THREE.Points(pSystem, pMaterial);
-      scene.add(particleSystem);
+      var pObject = {
+        material: pMaterial,
+        system: pSystem
+      };
+      this.systems.push(pObject);
     }
   }
 
-  particleUniverse(colorArry);
+  var universe = new ParticleVerse(particles);
+  console.log(universe);
 
-
-
-  // var particleColor = "#F1DD3F";
-  // var customParticle = new ParticleMaterial(particleColor);
-  // var pMaterial = customParticle.material
-  // var customSystem = new ParticleSystem();
-  // var pSystem = customSystem.particles;
-  // // instanciate
-  // var particleSystem = new THREE.Points(pSystem, pMaterial);
-  // scene.add(particleSystem);
 
   //RENDER
   var render = function () {
