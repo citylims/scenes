@@ -44,27 +44,29 @@ jQuery(document).ready(function($) {
 
   //lighting
   var spotLight = new THREE.SpotLight(0xffffff);
-      spotLight.position.set( 0, 100, 100 );
-      spotLight.intensity = 1;
-      spotLight.castShadow = true;
-      scene.add(spotLight);
+  spotLight.position.set( 0, 100, 100 );
+  spotLight.intensity = 1;
+  spotLight.castShadow = true;
+  scene.add(spotLight);
 
-
-  //particle arr
+  //particles
   var particles = new THREE.Geometry();
-  //particle material
-  var particleColor = "#F1DD3F";
   THREE.ImageUtils.crossOrigin = true;
-  var pMaterial = new THREE.PointCloudMaterial({
-    color: particleColor,
-    size: 3,
-    transparent:true,
-    opacity:.75,
-    map : THREE.ImageUtils.loadTexture(
-      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/61062/gradient.png"
-    )
-  });
-  //push particle into array.
+  //particle material constructor;
+  var particleColor = "#F1DD3F";
+  function ParticleMaterial(c) {
+    this.material = new THREE.PointsMaterial({
+      color: c,
+      size: 3,
+      transparent:true,
+      opacity:.75,
+      map : THREE.ImageUtils.loadTexture(
+        "https://s3-us-west-2.amazonaws.com/s.cdpn.io/61062/gradient.png"
+      )
+    });
+  }
+  var customParticle = new ParticleMaterial(particleColor);
+  var pMaterial = customParticle.material
   for(var i=0; i<2000; i++){
     var x = (Math.random() - 0.5 ) * 400;
     var y = (Math.random() - 0.5 ) * 400;
@@ -72,7 +74,7 @@ jQuery(document).ready(function($) {
     particles.vertices.push(new THREE.Vector3(x,y,z));
   }
   // instanciate
-  var particleSystem = new THREE.PointCloud(particles,pMaterial);
+  var particleSystem = new THREE.Points(particles, pMaterial);
   scene.add(particleSystem);
 
   //RENDER
@@ -81,7 +83,6 @@ jQuery(document).ready(function($) {
     animation();
     renderer.render(scene, camera);
   };
-
   //animations
   function animation(){
     scene.rotation.y  -= .0005;
