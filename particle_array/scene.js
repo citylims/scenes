@@ -51,26 +51,32 @@ jQuery(document).ready(function($) {
 
   //particles
   THREE.ImageUtils.crossOrigin = true;
-  var particles = [
-    {
-      color: "#F1DD3F",
-      opacity: .75,
-      size: 3,
-      number: 500
-    },
-    {
-      color: "#F92672",
-      opacity: .55,
-      size: 4,
-      number: 1000
-    },
-    {
-      color: "#2AA48E",
-      opacity: .8,
-      size: 2,
-      number: 500
-    },
-  ]
+
+  function getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
+  function Particles(num) {
+    this.particleArray = []
+    for (var i = 0; i < num; i ++) {
+      var c = getRandomColor();
+      var o = Math.floor(Math.random() * (100 - 0 + 1)) / 100;
+      var s = Math.floor(Math.random() * ( 6 - 2 + 1)) + 2;
+      var particleCount = Math.floor(Math.random() * (1000 - 250 + 1)) + 250;
+      var particle = {
+        color: c,
+        opacity: o,
+        size: s,
+        number: particleCount
+      }
+      this.particleArray.push(particle);
+    }
+  }
 
   function ParticleMaterial(c, s, o) {
     this.material = new THREE.PointsMaterial({
@@ -87,15 +93,16 @@ jQuery(document).ready(function($) {
   function ParticleSystem(number) {
     this.particles = new THREE.Geometry();
     for(var i=0; i < number; i++){
-      var x = (Math.random() - 0.5 ) * 400;
-      var y = (Math.random() - 0.5 ) * 400;
-      var z = (Math.random() - 0.5 ) * 400;
+      var x = (Math.random() - 0.5 ) * 800;
+      var y = (Math.random() - 0.5 ) * 800;
+      var z = (Math.random() - 0.5 ) * 800;
       this.particles.vertices.push(new THREE.Vector3(x,y,z));
     }
   };
 
-  function ParticleUniverse(pArr) {
+  function ParticleUniverse(particles) {
     this.galaxies = [];
+    var pArr = particles.particleArray;
     for (var i = 0; i < pArr.length; i++) {
       var customParticle = new ParticleMaterial(pArr[i].color, pArr[i].size, pArr[i].opacity);
       var pMaterial = customParticle.material;
@@ -109,8 +116,6 @@ jQuery(document).ready(function($) {
     }
   }
 
-  var universe = new ParticleUniverse(particles);
-
   function createUniverse(universe) {
     console.log(universe);
     var galaxies = universe.galaxies;
@@ -122,6 +127,8 @@ jQuery(document).ready(function($) {
     }
   };
 
+  var particles = new Particles(20);
+  var universe = new ParticleUniverse(particles);
   createUniverse(universe);
 
   //RENDER
