@@ -1,5 +1,4 @@
 jQuery(document).ready(function($) {
-
   var main_color = "#151718";
   var canvas_height = window.innerHeight;
   var canvas_width = window.innerWidth;
@@ -30,15 +29,7 @@ jQuery(document).ready(function($) {
   //controls
   controls = new THREE.OrbitControls(camera);
   controls.damping = 0.2;
-  // controls.maxPolarAngle = Math.PI/2;
-  // controls.minPolarAngle = 1;
   controls.maxDistance = 650;
-  $('canvas').on( "mouseenter", function(e) {
-  controls.enabled = true;
-  });
-  $('canvas').on( "mouseleave", function(e) {
-  controls.enabled = false;
-  });
 
   //particles
   THREE.ImageUtils.crossOrigin = true;
