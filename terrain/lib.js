@@ -25,22 +25,26 @@ jQuery(document).ready(function($) {
     this.material = new THREE.MeshLambertMaterial({
       color: mainColor
     });
-    this.wire_material = new THREE.MeshLambertMaterial({
+    this.wireMaterial = new THREE.MeshLambertMaterial({
       color: 0x000000,
       wireframe: true,
       transparent: true
     })
-    this.wire_frame = null;
+    this.terrainWire = null;
     this.inception = function() {
       for (var i = 0; i < this.geometry.verticies.length; i++) {
         this.geometry.verticies[i].z = Math.random() * 20;
       }
     }
     this.terrain = new THREE.Mesh(this.geometry, this.material);
-    this.wire = new THREE.Mesh(this.geometry.clone(). this.);
-
+    this.wire = new THREE.Mesh(this.geometry.clone(). this.terrainWire);
   }
 
-  gensisDevice();
+  var render = function() {
+    requestAnimationFrame(render);
+    renderer.render(scene, camera);
+  }
+
+  render();
 
 });
