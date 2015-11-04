@@ -22,24 +22,29 @@ jQuery(document).ready(function($) {
 
   function genesisDevice() {
     this.geometry =  new THREE.PlaneGeometry(canvasWidth * 2, canvasHeight * 2, 128,128);
+
     this.material = new THREE.MeshLambertMaterial({
       color: mainColor
     });
+
     this.wireMaterial = new THREE.MeshLambertMaterial({
       color: 0x000000,
       wireframe: true,
       transparent: true
     })
-    this.terrainWire = null;
-    console.log(this.geometry.vertices.length);
+    
+    this.terrainWire = null
+
+    console.log(this.wireMaterial);
+
     this.inception = function() {
       //plot terrain vertices
       for (var i = 0; i < this.geometry.vertices.length; i++) {
-        this.geometry.verticies[i].z = Math.random() * 20;
+        this.geometry.vertices[i].z = Math.random() * 20;
       }
       //define terrain model
       this.terrain = new THREE.Mesh(this.geometry, this.material);
-      this.wire = new THREE.Mesh(this.geometry.clone(). this.terrainWire);
+      this.wire = new THREE.Mesh(this.geometry.clone(),this.wireMaterial);
       //push into scene
       scene.add(this.terrain, this.wire);
       return this;
