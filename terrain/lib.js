@@ -60,6 +60,9 @@ jQuery(document).ready(function($) {
       //define terrain model
       this.terrain = new THREE.Mesh(this.geometry, this.material);
       this.wire = new THREE.Mesh(this.geometry.clone(),this.wireMaterial);
+      //set position
+      this.terrain.rotation.x = -Math.PI/2;
+      this.terrain.position.y = -20;
       //push into scene
       scene.add(this.terrain, this.wire);
       return this;
