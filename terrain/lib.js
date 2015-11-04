@@ -11,15 +11,15 @@ jQuery(document).ready(function($) {
   camera.position.set(0,50,200);
 
   var controls = new THREE.OrbitControls(camera);
-  controls.damping = 0.2.;
+  controls.damping = 0.2;
   controls.enabled = true;
   controls.maxPolarAngle = Math.PI/2;
   controls.minPolarAngle = 1;
-  controls.minDistance = 50;
+  controls.minDistance = 100;
   controls.maxDistance = 250;
 
   var spotLight = new THREE.SpotLight(0xffffff);
-  spotLight.position.set(0, 50, 50);
+  spotLight.position.set(0, 100, 100);
   spotLight.intensity = 1;
   spotLight.castShadow = true;
   scene.add(spotLight);
@@ -49,8 +49,6 @@ jQuery(document).ready(function($) {
       wireframe: true,
       transparent: true
     })
-
-    this.terrainWire = null
 
     console.log(this.wireMaterial);
 
