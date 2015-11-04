@@ -18,6 +18,11 @@ jQuery(document).ready(function($) {
   controls.minDistance = 50;
   controls.maxDistance = 250;
 
+  var spotLight = new THREE.SpotLight(0xffffff);
+  spotLight.position.set(0, 50, 50);
+  spotLight.intensity = 1;
+  spotLight.castShadow = true;
+  scene.add(spotLight);
 
   var renderer = new THREE.WebGLRenderer({ alpha: true});
   renderer.setSize(canvasWidth, canvasHeight);
