@@ -1,10 +1,10 @@
 jQuery(document).ready(function($) {
-  var mainColor = 0x33FFFF;
+  var mainColor = 0x009EF2;
   var canvasHeight = window.innerHeight;
   var canvasWidth = window.innerWidth;
 
   var scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(mainColor, 0.005);
+  scene.fog = new THREE.FogExp2(mainColor, 0.002);
 
   var camera = new THREE.PerspectiveCamera(75, canvasWidth/canvasHeight, 0.1, 1000);
   camera.lookAt(new THREE.Vector3(0,50,0));
@@ -19,7 +19,7 @@ jQuery(document).ready(function($) {
   controls.maxDistance = 250;
 
   var spotLight = new THREE.SpotLight(0xffffff);
-  spotLight.position.set(0, 100, 100);
+  spotLight.position.set(0, 300, 300);
   spotLight.intensity = 1;
   spotLight.castShadow = true;
   scene.add(spotLight);
@@ -50,6 +50,8 @@ jQuery(document).ready(function($) {
       transparent: true
     })
 
+    this.wire = null;
+
     console.log(this.wireMaterial);
 
     this.inception = function() {
@@ -59,10 +61,15 @@ jQuery(document).ready(function($) {
       }
       //define terrain model
       this.terrain = new THREE.Mesh(this.geometry, this.material);
-      this.wire = new THREE.Mesh(this.geometry.clone(),this.wireMaterial);
+      this.wire = new THREE.Mesh(this.geometry,this.wireMaterial);
       //set position
       this.terrain.rotation.x = -Math.PI/2;
       this.terrain.position.y = -20;
+      this.wire.rotation.x = -Math.PI/2;
+      this.wire.position.y = -19.8;
+
+      this.terrain.recieveShadow = true;
+      this.terrain.castShadow = true;
       //push into scene
       scene.add(this.terrain, this.wire);
       return this;
