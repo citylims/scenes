@@ -1,33 +1,43 @@
 jQuery(document).ready(function($) {
-  
-  var canvas_height = window.innerHeight;
-  var canvas_width = window.innerWidth;
+  var mainColor = 0x33FFFF;
+  var canvasHeight = window.innerHeight;
+  var canvasWidth = window.innerWidth;
 
   var scene = new THREE.Scene();
 
-  var camera = new THREE.PerspectiveCamera(75, canvas_width/canvas_height, 0.1, 1000);
+  var camera = new THREE.PerspectiveCamera(75, canvasWidth/canvasHeight, 0.1, 1000);
 
   var renderer = new THREE.WebGLRenderer({ alpha: true});
-  renderer.setSize(canvas_width, canvas_height);
+  renderer.setSize(canvasWidth, canvasHeight);
   renderer.shadowMapEnabled = true;
   renderer.shadowMapType = THREE.PCFSoftShadowMap;
-  renderer.setClearColor(0x33FFFF, 1);
+  renderer.setClearColor(mainColor, 1);
   $('body').append(renderer.domElement);
 
   window.onresize = function() {
-    var canvas_height = window.innerHeight;
-    var canvas_width = window.innerWidth;
-    camera.aspect = canvas_width / canvas_height;
+    var canvasHeight = window.innerHeight;
+    var canvasWidth = window.innerWidth;
+    camera.aspect = canvasWidth / canvasHeight;
   }
 
   function genesisDevice() {
-    this.geometry = new THREE.PlaneGeometry(canvas_width * 2, canvas_height, 128, 128);
+    this.geometry = new THREE.PlaneGeometry(canvasWidth * 2, canvasHeight, 128, 128);
     this.material = new THREE.MeshLambertMaterial({
+      color: mainColor
+    });
+    this.wire_material = new THREE.MeshLambertMaterial({
       color: 0x000000,
       wireframe: true,
       transparent: true
     })
-    this.wire = null;
+    this.wire_frame = null;
+    this.inception = function() {
+      for (var i = 0; i < this.geometry.verticies.length; i++) {
+        this.geometry.verticies[i].z = Math.random() * 20;
+      }
+    }
+    this.terrain = new THREE.Mesh(this.geometry, this.material);
+    this.wire = new THREE.Mesh(this.geometry.clone(). this.);
 
   }
 
