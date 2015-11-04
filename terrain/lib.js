@@ -77,7 +77,7 @@ jQuery(document).ready(function($) {
     //define obj
     this.inception();
   }
-  //SKYBOX
+  //SKY
   THREE.ImageUtils.crossOrigin = true;
   var skyGeometry = new THREE.CubeGeometry(1000, 1000, 1000);
   var materialArray = [];
@@ -88,19 +88,8 @@ jQuery(document).ready(function($) {
     }));
   }
   var skyMaterial = new THREE.MeshFaceMaterial(materialArray);
-  var skyBox = new THREE.Mesh(skyGeometry, skyMaterial);
-  scene.add(skyBox);
-
-  //FLOOR
-  // var floorTexture = new THREE.ImageUtils.loadTexture( 'images/DeepSpace.png' );
-	// floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
-	// floorTexture.repeat.set( 10, 10 );
-	// var floorMaterial = new THREE.MeshBasicMaterial( { map: floorTexture, side: THREE.DoubleSide } );
-	// var floorGeometry = new THREE.PlaneGeometry(100, 100, 10, 10);
-	// var floor = new THREE.Mesh(floorGeometry, floorMaterial);
-	// floor.position.y = -0.5;
-	// floor.rotation.x = Math.PI / 2;
-	// scene.add(floor);
+  var sky = new THREE.Mesh(skyGeometry, skyMaterial);
+  scene.add(sky);
 
   //pass genesis to global scope
     //should wrap this in init function
