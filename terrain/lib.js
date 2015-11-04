@@ -17,3 +17,16 @@ window.onresize = function() {
   var canvas_width = window.innerWidth;
   camera.aspect = canvas_width / canvas_height;
 }
+
+function genesisDevice() {
+  this.geometry = new THREE.PlaneGeometry(canvas_width * 2, canvas_height, 128, 128);
+  this.material = new THREE.MeshLambertMaterial({
+    color: 0x000000,
+    wireframe: true,
+    transparent: true
+  })
+  this.wire = null;
+
+}
+
+gensisDevice();
