@@ -20,7 +20,7 @@ jQuery(document).ready(function($) {
   controls.damping = 0.2;
   controls.enabled = true;
   controls.maxPolarAngle = Math.PI/2;
-  controls.minPolarAngle = 1;
+  // controls.minPolarAngle = 1;
   controls.minDistance = 100;
   controls.maxDistance = 250;
   //renderer
@@ -79,17 +79,16 @@ jQuery(document).ready(function($) {
   }
   //pass genesis to global scope
   var terrain = genesisDevice();
-  //render
+  //render scene
   var render = function() {
     requestAnimationFrame(render);
     animation();
     renderer.render(scene, camera);
   }
-
+  //animations
   function animation() {
     scene.rotation.y -= .0005;
   }
 
   render();
-
 });
