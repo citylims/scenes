@@ -10,6 +10,15 @@ jQuery(document).ready(function($) {
   camera.lookAt(new THREE.Vector3(0,50,0));
   camera.position.set(0,50,200);
 
+  var controls = new THREE.OrbitControls(camera);
+  controls.damping = 0.2.;
+  controls.enabled = true;
+  controls.maxPolarAngle = Math.PI/2;
+  controls.minPolarAngle = 1;
+  controls.minDistance = 50;
+  controls.maxDistance = 250;
+
+
   var renderer = new THREE.WebGLRenderer({ alpha: true});
   renderer.setSize(canvasWidth, canvasHeight);
   renderer.shadowMap.enabled = true;
