@@ -52,16 +52,21 @@ jQuery(document).ready(function($) {
 
     this.wire = null;
 
-    console.log(this.wireMaterial);
+    console.log(this.geometry.vertices);
 
     this.inception = function() {
       //plot terrain vertices
+      var num = Math.floor(Math.random() * (30 - 20 + 1)) + 20;
+
       for (var i = 0; i < this.geometry.vertices.length; i++) {
-        this.geometry.vertices[i].z = Math.random() * 20;
+        if (i % 2 === 0 || i % 5 === 0) {
+          this.geometry.vertices[i].z = Math.random() * num;
+        }
+        // this.geometry.vertices[i].z = Math.random() * 50;
       }
       //define terrain model
       this.terrain = new THREE.Mesh(this.geometry, this.material);
-      this.wire = new THREE.Mesh(this.geometry,this.wireMaterial);
+      this.wire = new THREE.Mesh(this.geometry, this.wireMaterial);
       //set position
       this.terrain.rotation.x = -Math.PI/2;
       this.terrain.position.y = -20;
