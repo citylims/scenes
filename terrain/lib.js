@@ -21,7 +21,7 @@ jQuery(document).ready(function($) {
   }
 
   function genesisDevice() {
-    this.geometry = new THREE.PlaneGeometry(canvasWidth * 2, canvasHeight, 128, 128);
+    this.geometry =  new THREE.PlaneGeometry(canvasWidth * 2, canvasHeight * 2, 128,128);
     this.material = new THREE.MeshLambertMaterial({
       color: mainColor
     });
@@ -31,14 +31,25 @@ jQuery(document).ready(function($) {
       transparent: true
     })
     this.terrainWire = null;
+    console.log(this.geometry.vertices.length);
     this.inception = function() {
-      for (var i = 0; i < this.geometry.verticies.length; i++) {
+      //plot terrain vertices
+      for (var i = 0; i < this.geometry.vertices.length; i++) {
         this.geometry.verticies[i].z = Math.random() * 20;
       }
+      //define terrain model
+      this.terrain = new THREE.Mesh(this.geometry, this.material);
+      this.wire = new THREE.Mesh(this.geometry.clone(). this.terrainWire);
+      //push into scene
+      scene.add(this.terrain, this.wire);
+      return this;
     }
-    this.terrain = new THREE.Mesh(this.geometry, this.material);
-    this.wire = new THREE.Mesh(this.geometry.clone(). this.terrainWire);
+
+    this.inception();
   }
+
+  //pass terrainObj to global scope
+  var terrain = genesisDevice();
 
   var render = function() {
     requestAnimationFrame(render);
