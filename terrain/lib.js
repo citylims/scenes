@@ -4,13 +4,16 @@ jQuery(document).ready(function($) {
   var canvasWidth = window.innerWidth;
 
   var scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(mainColor, 0.005);
 
   var camera = new THREE.PerspectiveCamera(75, canvasWidth/canvasHeight, 0.1, 1000);
+  camera.lookAt(new THREE.Vector3(0,50,0));
+  camera.position.set(0,50,200);
 
   var renderer = new THREE.WebGLRenderer({ alpha: true});
   renderer.setSize(canvasWidth, canvasHeight);
-  renderer.shadowMapEnabled = true;
-  renderer.shadowMapType = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.setClearColor(mainColor, 1);
   $('body').append(renderer.domElement);
 
@@ -32,7 +35,7 @@ jQuery(document).ready(function($) {
       wireframe: true,
       transparent: true
     })
-    
+
     this.terrainWire = null
 
     console.log(this.wireMaterial);
