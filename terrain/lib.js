@@ -2,13 +2,14 @@ jQuery(document).ready(function($) {
   var mainColor = 0x009EF2;
   var canvasHeight = window.innerHeight;
   var canvasWidth = window.innerWidth;
+  var loader = new THREE.TextureLoader();
   //scene
   var scene = new THREE.Scene();
   scene.fog = new THREE.FogExp2(mainColor, 0.002);
   //cam
   var camera = new THREE.PerspectiveCamera(75, canvasWidth/canvasHeight, 0.1, 1000);
   camera.lookAt(new THREE.Vector3(0,50,0));
-  camera.position.set(0,50,200);
+  camera.position.set(0,50,400);
   //spotlight
   var spotLight = new THREE.SpotLight(0xffffff);
   spotLight.position.set(0, 300, 300);
@@ -21,8 +22,8 @@ jQuery(document).ready(function($) {
   controls.enabled = true;
   controls.maxPolarAngle = Math.PI/2;
   // controls.minPolarAngle = 1;
-  controls.minDistance = 100;
-  controls.maxDistance = 250;
+  controls.minDistance = 300;
+  controls.maxDistance = 500;
   //renderer
   var renderer = new THREE.WebGLRenderer({ alpha: true});
   renderer.setSize(canvasWidth, canvasHeight);
@@ -77,22 +78,32 @@ jQuery(document).ready(function($) {
     //define obj
     this.inception();
   }
-  //SKY
-  THREE.ImageUtils.crossOrigin = true;
-  var skyGeometry = new THREE.CubeGeometry(1000, 1000, 1000);
-  var materialArray = [];
+
+  //sky cube
+  var skyGeometry = new THREE.CubeGeometry(1024, 1024, 1024);
+  var skyArray = [];
   for (var i = 0; i < 6; i++) {
-    materialArray.push(new THREE.MeshBasicMaterial({
-      map: THREE.TextureLoader("images/DeepSpace.png"),
+    skyArray.push(new THREE.MeshBasicMaterial({
+      map: THREE.ImageUtils.loadTexture("images/sunmap.jpg"),
       side: THREE.BackSide
     }));
   }
-  var skyMaterial = new THREE.MeshFaceMaterial(materialArray);
-  var sky = new THREE.Mesh(skyGeometry, skyMaterial);
-  scene.add(sky);
+  var skyMaterial = new THREE.MeshFaceMaterial(skyArray);
+  var skyBox = new THREE.Mesh(skyGeometry, skyMaterial);
+  scene.add(skyBox)
+
+  //sphere
+  loader.load( 'http://i.imgur.com/D7zissU.png', function (texture) {
+    var geometry = new THREE.SphereGeometry( 150, 150, 150 );
+    var material = new THREE.MeshBasicMaterial({
+      map: texture,
+      overdraw: 0.5
+    });
+    var sphere = new THREE.Mesh( geometry, material );
+    scene.add(sphere);
+  });
 
   //pass genesis to global scope
-    //should wrap this in init function
   var terrain = genesisDevice();
   //render scene
   var render = function() {
