@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-  var mainColor = 0x009EF2;
+  var mainColor = 0x33FFFF;
   var canvasHeight = window.innerHeight;
   var canvasWidth = window.innerWidth;
   var loader = new THREE.TextureLoader();
