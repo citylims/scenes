@@ -21,7 +21,7 @@ jQuery(document).ready(function($) {
   controls.damping = 0.2;
   controls.enabled = true;
   controls.maxPolarAngle = Math.PI/2;
-  // controls.minPolarAngle = 1;
+  controls.minPolarAngle = 1;
   controls.minDistance = 300;
   controls.maxDistance = 500;
 
@@ -70,7 +70,7 @@ jQuery(document).ready(function($) {
       this.wire = new THREE.Mesh(this.geometry, this.wireMaterial);
       this.wire.rotation.x = -Math.PI/2;
       this.wire.position.y = -19.8;
-      
+
       scene.add(this.terrain, this.wire);
       return this;
     }
