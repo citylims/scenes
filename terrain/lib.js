@@ -55,23 +55,22 @@ jQuery(document).ready(function($) {
     this.inception = function() {
       //plot terrain vertices
       for (var i = 0; i < this.geometry.vertices.length; i++) {
-        if (i % 2 === 0 || i % 5 === 0 || i % 7 === 0) {
+        if (i % 2 === 0 || i % 3 === 0 || i % 7 === 0) {
           var num = Math.floor(Math.random() * (30 - 20 + 1)) + 20;
           this.geometry.vertices[i].z = Math.random() * num;
         }
       }
       //define terrain model
       this.terrain = new THREE.Mesh(this.geometry, this.material);
-      this.wire = new THREE.Mesh(this.geometry, this.wireMaterial);
-
       this.terrain.rotation.x = -Math.PI/2;
       this.terrain.position.y = -20;
-      this.wire.rotation.x = -Math.PI/2;
-      this.wire.position.y = -19.8;
-
       this.terrain.recieveShadow = true;
       this.terrain.castShadow = true;
 
+      this.wire = new THREE.Mesh(this.geometry, this.wireMaterial);
+      this.wire.rotation.x = -Math.PI/2;
+      this.wire.position.y = -19.8;
+      
       scene.add(this.terrain, this.wire);
       return this;
     }
@@ -94,12 +93,12 @@ jQuery(document).ready(function($) {
 
   //sphere
   loader.load( 'images/plutomap1k.jpg', function (texture) {
-    var geometry = new THREE.SphereGeometry( 150, 150, 150 );
+    var geometry = new THREE.SphereGeometry(150, 150, 150);
     var material = new THREE.MeshBasicMaterial({
       map: texture,
       overdraw: 0.5
     });
-    var sphere = new THREE.Mesh( geometry, material );
+    var sphere = new THREE.Mesh(geometry, material);
     scene.add(sphere);
   });
 
