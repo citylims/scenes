@@ -10,6 +10,9 @@ jQuery(document).ready(function($) {
   var camera = new THREE.PerspectiveCamera(75, canvasWidth/canvasHeight, 0.1, 1000);
   camera.lookAt(new THREE.Vector3(0,50,0));
   camera.position.set(0,50,400);
+  var fov = camera.fov, zoom = 1.0, inc = -0.001;
+  console.log(fov);
+  console.log(camera.fov);
 
   var spotLight = new THREE.SpotLight(0xffffff);
   spotLight.position.set(0, 300, 300);
@@ -105,6 +108,8 @@ jQuery(document).ready(function($) {
 
   var terrain = genesisDevice();
 
+
+
   var render = function() {
     requestAnimationFrame(render);
     animation();
@@ -113,6 +118,12 @@ jQuery(document).ready(function($) {
   //animations
   function animation() {
     scene.rotation.y -= .0005;
+    camera.fov = fov * zoom;
+    camera.updateProjectionMatrix();
+    zoom += inc;
+    if (zoom <= 0.2 || zoom >= 1.0) {
+      inc = +inc;
+    }
   }
 
   render();
