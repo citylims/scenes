@@ -1,0 +1,26 @@
+{
+  "name": "scenes_js",
+  "version": "1.0.0",
+  "description": "Three.js sketchbook",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/citylims/scenesJS.git"
+  },
+  "keywords": [
+    "three.js"
+  ],
+  "author": "Austin Formica",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/citylims/scenesJS/issues"
+  },
+  "homepage": "https://github.com/citylims/scenesJS#readme",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
