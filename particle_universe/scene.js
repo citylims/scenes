@@ -1,24 +1,28 @@
-jQuery(document).ready(function($) {
-  var main_color = "#151718";
+generateUniverse(15);
+
+function generateUniverse(galaxies) {
+  var space = "#151718";
   var canvas_height = window.innerHeight;
   var canvas_width = window.innerWidth;
   var scene = new THREE.Scene();
 
   //cam
-  var camera = new THREE.PerspectiveCamera(75, canvas_width/canvas_height, 0.1, 1000);
-  camera.position.set(0,50,1200);
-  camera.lookAt(new THREE.Vector3(0,50,0));
+  var camera = new THREE.PerspectiveCamera(75, canvas_width / canvas_height, 0.1, 1000);
+  camera.position.set(0, 50, 1200);
+  camera.lookAt(new THREE.Vector3(0, 50, 0));
 
   //renderer
-  var renderer = new THREE.WebGLRenderer({alpha: true});
+  var renderer = new THREE.WebGLRenderer({
+    alpha: true
+  });
   renderer.setSize(canvas_width, canvas_height);
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  renderer.setClearColor(main_color,1);
+  renderer.setClearColor(space, 1);
   document.body.appendChild(renderer.domElement);
 
   //window
-  window.onresize = function(){
+  window.onresize = function() {
     canvas_height = window.innerHeight;
     canvas_width = window.innerWidth;
     camera.aspect = canvas_width / canvas_height;
@@ -29,26 +33,26 @@ jQuery(document).ready(function($) {
   //controls
   controls = new THREE.OrbitControls(camera);
   controls.damping = 0.2;
-  controls.maxDistance = 650;
+  controls.maxDistance = 900;
 
-  //particles
+  //particle objects
   THREE.ImageUtils.crossOrigin = true;
 
   function getRandomColor() {
     var letters = '0123456789ABCDEF'.split('');
     var color = '#';
-    for (var i = 0; i < 6; i++ ) {
-        color += letters[Math.floor(Math.random() * 16)];
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
   }
-
+  
   function Particles(num) {
     this.particleArray = []
-    for (var i = 0; i < num; i ++) {
+    for (var i = 0; i < num; i++) {
       var c = getRandomColor();
       var o = Math.floor(Math.random() * (100 - 0 + 1)) / 100;
-      var s = Math.floor(Math.random() * ( 10 - 5 + 1)) + 5;
+      var s = Math.floor(Math.random() * (15 - 5 + 1)) + 5;
       var particleCount = Math.floor(Math.random() * (1000 - 250 + 1)) + 250;
       var particle = {
         color: c,
@@ -64,7 +68,7 @@ jQuery(document).ready(function($) {
     this.material = new THREE.PointsMaterial({
       color: c,
       size: s,
-      transparent:true,
+      transparent: true,
       opacity: o,
       map: THREE.ImageUtils.loadTexture(
         "https://s3-us-west-2.amazonaws.com/s.cdpn.io/61062/gradient.png"
@@ -74,11 +78,11 @@ jQuery(document).ready(function($) {
 
   function ParticleSystem(number) {
     this.particles = new THREE.Geometry();
-    for(var i=0; i < number; i++){
-      var x = (Math.random() - 0.5 ) * 2000;
-      var y = (Math.random() - 0.5 ) * 1100;
-      var z = (Math.random() - 0.5 ) * 2000;
-      this.particles.vertices.push(new THREE.Vector3(x,y,z));
+    for (var i = 0; i < number; i++) {
+      var x = (Math.random() - 0.5) * 2000;
+      var y = (Math.random() - 0.5) * 1100;
+      var z = (Math.random() - 0.5) * 2000;
+      this.particles.vertices.push(new THREE.Vector3(x, y, z));
     }
   };
 
@@ -99,28 +103,28 @@ jQuery(document).ready(function($) {
   }
 
   function createUniverse(universe) {
-    console.log(universe);
     var galaxies = universe.galaxies;
     for (var i = 0; i < galaxies.length; i++) {
-      var galaxy = new THREE.Points(galaxies[i].system,galaxies[i].material);
+      var galaxy = new THREE.Points(galaxies[i].system, galaxies[i].material);
       scene.add(galaxy);
     }
   };
 
-  var particles = new Particles(30);
+  var particles = new Particles(galaxies);
   var universe = new ParticleUniverse(particles);
+  
   createUniverse(universe);
 
-  //RENDER
-  var render = function () {
+  // render
+  var render = function() {
     requestAnimationFrame(render);
     animation();
     renderer.render(scene, camera);
   };
   //animations
-  function animation(){
-    scene.rotation.y  -= .0005;
+  function animation() {
+    scene.rotation.y -= .0002;
   };
 
   render();
-});
+};
